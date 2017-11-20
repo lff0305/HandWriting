@@ -6,6 +6,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 import java.awt.event.*;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
@@ -98,6 +99,19 @@ public class MainDialog extends JDialog {
     private void createPDF(String file) {
         try {
             String fileName = !file.endsWith(".pdf") ? file + ".pdf" : file;
+            File diskFile = new File(fileName);
+            if (diskFile.isDirectory()) {
+                SwingUtilities.invokeLater(() -> {
+                    JOptionPane.showMessageDialog(contentPane, fileName + " is a directory");
+                });
+                return;
+            }
+            if (diskFile.exists()) {
+                int r = JOptionPane.showConfirmDialog(contentPane, fileName + " exists. Overwrite?", "Warning", JOptionPane.YES_NO_OPTION);
+                if (r == JOptionPane.NO_OPTION) {
+                    return;
+                }
+            }
             byte[] data = PDFUtil.getContent(this.textArea1.getText(), new Option());
             FileOutputStream fw = new FileOutputStream(fileName);
             fw.write(data);
