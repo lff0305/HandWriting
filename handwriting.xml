@@ -227,9 +227,18 @@
     </copy>
 
 
-    <jar destfile="${english.output.dir}/../english.jar" basedir="${english.output.dir}">
-
+    <jar destfile="${dist.dir}/english.jar" basedir="${english.output.dir}">
     </jar>
+
+      <copy todir="${dist.dir}">
+          <fileset dir="${basedir}/lib">
+              <include name="*.jar"></include>
+          </fileset>
+
+          <fileset dir="${basedir}">
+              <include name="*.bat"></include>
+          </fileset>
+      </copy>
 
   </target>
   

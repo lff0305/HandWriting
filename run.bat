@@ -1,0 +1,1 @@
+java -cp * org.lff.handwriting.Main
