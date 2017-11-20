@@ -114,8 +114,8 @@ public class MainDialog extends JDialog {
     }
 
     private void onCancel() {
-        // add your code here if necessary
-        dispose();
+        this.dispose();
+        System.exit(0);
     }
 
     private PreviewPanel getPreviewPanel() {
