@@ -5,14 +5,14 @@ import com.itextpdf.kernel.color.Color;
 import com.itextpdf.kernel.color.DeviceCmyk;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
-import com.itextpdf.kernel.geom.AffineTransform;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfPage;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 
-import java.awt.font.FontRenderContext;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,7 +114,6 @@ public class PDFUtil {
                         canvas.setFontAndSize(font, option.getCellHeight() * 1.7f);
                         canvas.showText(word);
                         canvas.endText();
-                        AffineTransform affinetransform = new AffineTransform();
                         c += font.getWidth(word + " ", option.getCellHeight() * 1.7f);
                     }
                 }
