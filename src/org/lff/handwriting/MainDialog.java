@@ -103,11 +103,11 @@ public class MainDialog extends JDialog {
             fw.write(data);
             fw.close();
             SwingUtilities.invokeLater(() -> {
-                JOptionPane.showMessageDialog(null, "File " + fileName + " created.");
+                JOptionPane.showMessageDialog(contentPane, "File " + fileName + " created.");
             });
         } catch (IOException e) {
             SwingUtilities.invokeLater(() -> {
-                JOptionPane.showMessageDialog(null, "File not created : " + e.getMessage());
+                JOptionPane.showMessageDialog(contentPane, "File not created : " + e.getMessage());
             });
         }
 
@@ -123,7 +123,6 @@ public class MainDialog extends JDialog {
     }
 
     private void createUIComponents() {
-        // TODO: place custom component creation code here
         scrollPane = new JScrollPane();
         previewPanel = new PreviewPanel(scrollPane);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
