@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="handwriting" default="all">
+  
+  
+  <property file="handwriting.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/*.yarb/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.egg"/>
+    <include name="*.jar"/>
+    <include name="*.ear"/>
+    <include name="*.apk"/>
+    <include name="*.swc"/>
+    <include name="*.war"/>
+    <include name="*.zip"/>
+    <include name="*.ane"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+    <exclude name="**/?*.aj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.8" value="${jdk.home.1.8}/bin"/>
+  <path id="jdk.classpath.1.8">
+    <fileset dir="${jdk.home.1.8}">
+      <include name="jre/lib/charsets.jar"/>
+      <include name="jre/lib/deploy.jar"/>
+      <include name="jre/lib/ext/access-bridge-64.jar"/>
+      <include name="jre/lib/ext/cldrdata.jar"/>
+      <include name="jre/lib/ext/dnsns.jar"/>
+      <include name="jre/lib/ext/jaccess.jar"/>
+      <include name="jre/lib/ext/jfxrt.jar"/>
+      <include name="jre/lib/ext/localedata.jar"/>
+      <include name="jre/lib/ext/nashorn.jar"/>
+      <include name="jre/lib/ext/sunec.jar"/>
+      <include name="jre/lib/ext/sunjce_provider.jar"/>
+      <include name="jre/lib/ext/sunmscapi.jar"/>
+      <include name="jre/lib/ext/sunpkcs11.jar"/>
+      <include name="jre/lib/ext/zipfs.jar"/>
+      <include name="jre/lib/javaws.jar"/>
+      <include name="jre/lib/jce.jar"/>
+      <include name="jre/lib/jfr.jar"/>
+      <include name="jre/lib/jfxswt.jar"/>
+      <include name="jre/lib/jsse.jar"/>
+      <include name="jre/lib/management-agent.jar"/>
+      <include name="jre/lib/plugin.jar"/>
+      <include name="jre/lib/resources.jar"/>
+      <include name="jre/lib/rt.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.8}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.8}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.8"/>
+
+  <tstamp>
+    <format property="build.time" pattern="yyyy-MM-dd HH:mm"/>
+  </tstamp>
+  <!-- Project Libraries -->
+  
+  <path id="library.forms_rt.classpath">
+    <pathelement location="${basedir}/lib/forms_rt.jar"/>
+  </path>
+  
+  <path id="library.itext7-io-7.0.2.classpath">
+    <pathelement location="${basedir}/lib/itext7-io-7.0.2.jar"/>
+    <pathelement location="${basedir}/lib/itext7-kernel-7.0.2.jar"/>
+    <pathelement location="${basedir}/lib/itext7-layout-7.0.2.jar"/>
+  </path>
+  
+  <path id="library.miglayout-swing-5.0.classpath">
+    <pathelement location="${basedir}/lib/miglayout-core-5.0.jar"/>
+    <pathelement location="${basedir}/lib/miglayout-swing-5.0.jar"/>
+  </path>
+
+
+    <property name="dist.dir" value="${basedir}/dist"/>
+  <!-- Global Libraries -->
+  
+  
+  <!-- Application Server Libraries -->
+  <!-- Register Custom Compiler Taskdefs -->
+  <property name="javac2.home" value="${idea.home}/lib"/>
+  <path id="javac2.classpath">
+    <pathelement location="${javac2.home}/javac2.jar"/>
+    <pathelement location="${javac2.home}/jdom.jar"/>
+    <pathelement location="${javac2.home}/asm-all.jar"/>
+    <pathelement location="${javac2.home}/jgoodies-forms.jar"/>
+  </path>
+  <target name="register.custom.compilers">
+    <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
+    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
+  </target>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module English -->
+  
+  <dirname property="module.english.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.english" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.english" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.english" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.english" value="-encoding UTF-8 -source 1.8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="english.output.dir" value="${module.english.basedir}/out/production"/>
+  <property name="english.testoutput.dir" value="${module.english.basedir}/out/test"/>
+  
+  <path id="english.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="english.module.production.classpath">
+    <path refid="${module.jdk.classpath.english}"/>
+    <path refid="library.itext7-io-7.0.2.classpath"/>
+    <path refid="library.miglayout-swing-5.0.classpath"/>
+    <path refid="library.forms_rt.classpath"/>
+    <path>
+        <fileset dir="${basedir}/lib">
+            <include name="*.jar"></include>
+        </fileset>
+    </path>
+  </path>
+  
+  <path id="english.runtime.production.module.classpath">
+    <pathelement location="${english.output.dir}"/>
+    <path refid="library.itext7-io-7.0.2.classpath"/>
+    <path refid="library.miglayout-swing-5.0.classpath"/>
+    <path refid="library.forms_rt.classpath"/>
+  </path>
+  
+  <path id="english.module.classpath">
+    <path refid="${module.jdk.classpath.english}"/>
+    <pathelement location="${english.output.dir}"/>
+    <path refid="library.itext7-io-7.0.2.classpath"/>
+    <path refid="library.miglayout-swing-5.0.classpath"/>
+    <path refid="library.forms_rt.classpath"/>
+  </path>
+  
+  <path id="english.runtime.module.classpath">
+    <pathelement location="${english.testoutput.dir}"/>
+    <pathelement location="${english.output.dir}"/>
+    <path refid="library.itext7-io-7.0.2.classpath"/>
+    <path refid="library.miglayout-swing-5.0.classpath"/>
+    <path refid="library.forms_rt.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.english">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.english">
+    <patternset refid="excluded.from.module.english"/>
+  </patternset>
+  
+  <path id="english.module.sourcepath">
+    <dirset dir="${module.english.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.english" depends="compile.module.english.production,compile.module.english.tests" description="Compile module English"/>
+  
+  <target name="compile.module.english.production" depends="register.custom.compilers" description="Compile module English; production classes">
+
+    <buildnumber file="${module.english.basedir}/build.number"/>
+
+    <propertyfile file="${module.english.basedir}/src/org/lff/handwriting/version.properties">
+        <entry key="timestamp" value="${build.time}"/>
+        <entry key="buildNo" value="${build.number}"/>
+    </propertyfile>
+
+    <mkdir dir="${english.output.dir}"/>
+    <javac2 destdir="${english.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.english}/javac">
+      <compilerarg line="${compiler.args.english}"/>
+      <bootclasspath refid="english.module.bootclasspath"/>
+      <classpath refid="english.module.production.classpath"/>
+      <src refid="english.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.english"/>
+    </javac2>
+    
+    <copy todir="${english.output.dir}">
+      <fileset dir="${module.english.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+
+
+    <jar destfile="${english.output.dir}/../english.jar" basedir="${english.output.dir}">
+
+    </jar>
+
+  </target>
+  
+  <target name="compile.module.english.tests" depends="register.custom.compilers,compile.module.english.production" description="compile module English; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.english" description="cleanup module">
+    <delete dir="${english.output.dir}"/>
+    <delete dir="${english.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+    <target name="clean" depends="clean.module.english" description="cleanup all">
+
+        <delete dir="${dist.dir}" failonerror="false"/>
+
+        <mkdir dir="${dist.dir}"/>
+
+    </target>
+  
+  <target name="build.modules" depends="init, clean, compile.module.english" description="build all modules"/>
+  
+  <target name="all" depends="build.modules" description="build all"/>
+</project>
