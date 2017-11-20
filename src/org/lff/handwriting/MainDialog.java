@@ -8,8 +8,13 @@ import javax.swing.filechooser.FileSystemView;
 import java.awt.event.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MainDialog extends JDialog {
+
+    private static ExecutorService pool = Executors.newCachedThreadPool();
+
     private static final long serialVersionUID = 2401381172141590048L;
     private JPanel contentPane;
     private JButton buttonOK;
@@ -84,22 +89,28 @@ public class MainDialog extends JDialog {
                 return;
             }
             String file = jfc.getSelectedFile().getPath();
-            if (!file.endsWith(".pdf")) {
-                file += ".pdf";
-            }
-            createPDF(file);
+            pool.submit(() -> {
+                createPDF(file);
+            });
         });
     }
 
     private void createPDF(String file) {
         try {
+            String fileName = !file.endsWith(".pdf") ? file + ".pdf" : file;
             byte[] data = PDFUtil.getContent(this.textArea1.getText(), new Option());
-            FileOutputStream fw = new FileOutputStream(file);
+            FileOutputStream fw = new FileOutputStream(fileName);
             fw.write(data);
             fw.close();
+            SwingUtilities.invokeLater(() -> {
+                JOptionPane.showMessageDialog(null, "File " + fileName + " created.");
+            });
         } catch (IOException e) {
-            e.printStackTrace();
+            SwingUtilities.invokeLater(() -> {
+                JOptionPane.showMessageDialog(null, "File not created : " + e.getMessage());
+            });
         }
+
     }
 
     private void onCancel() {
