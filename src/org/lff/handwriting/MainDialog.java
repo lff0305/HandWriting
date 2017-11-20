@@ -1,5 +1,8 @@
 package org.lff.handwriting;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -9,10 +12,14 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.invoke.MethodHandles;
+import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class MainDialog extends JDialog {
+
+    private static Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private static ExecutorService pool = Executors.newCachedThreadPool();
 
@@ -75,6 +82,11 @@ public class MainDialog extends JDialog {
                 PreviewUtil.preview(scrollPane, previewPanel, text);
             }
         });
+
+
+        this.setTitle("Handing Writing Generator " + getVersion());
+
+        logger.info("MainDialog inited.");
     }
 
     private void onOK() {
@@ -129,6 +141,7 @@ public class MainDialog extends JDialog {
 
     private void onCancel() {
         this.dispose();
+        logger.info("Program Exited.");
         System.exit(0);
     }
 
@@ -142,5 +155,18 @@ public class MainDialog extends JDialog {
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         configPanel = new ConfigPanel();
+    }
+
+    private String getVersion() {
+        Properties p = new Properties();
+        try {
+            p.load(this.getClass().getResourceAsStream("/org/lff/handwriting/version.properties"));
+        } catch (IOException e) {
+            logger.error("Cannot load version.properties", e);
+        }
+        String major = p.getProperty("major");
+        String minor = p.getProperty("minor");
+        String timestamp = p.getProperty("timestamp");
+        return major + "." + minor + " " + timestamp;
     }
 }

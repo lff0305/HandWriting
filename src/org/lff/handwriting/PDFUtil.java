@@ -9,10 +9,13 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfPage;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +23,8 @@ import java.util.List;
  * Created by liuff on 2017/4/20 9:39
  */
 public class PDFUtil {
+
+    private static Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private static final int SIZE_LIMIT = 40;
 
@@ -41,7 +46,9 @@ public class PDFUtil {
         }
         bos.close();
 
+        logger.info("Font loaded. size = {}", bos.size());
 
+        final byte[] fontBuf = bos.toByteArray();
 
         int pageCount = lines.length / option.getRowCount();
         if (lines.length % option.getRowCount() != 0) {
@@ -60,10 +67,9 @@ public class PDFUtil {
             float cellHeight = (float)((contentSize + option.getRowGap() - option.getRowCount() * option.getRowGap()) / ( 4.0 * option.getRowCount()));
             option.setCellHeight(cellHeight);
 
-            System.out.println("Width = " + width + " Height = " + height + " \ncellHeight = " + cellHeight);
-            System.out.println("RowCount = " + option.getRowCount() + " Gap Size = " + option.getRowGap());
-            System.out.println("TopOffset = " + option.getTopOffset());
-            System.out.println("BottonOffset = " + option.getBottomOffset());
+            logger.info("Width = {} Height = {} rowCount = {}", width, height, option.getRowCount());
+            logger.info("CellHeight = {}, Gap Size = {} ", option.getCellHeight(), option.getRowGap());
+            logger.info("TopOffset = {}, BottomOffset = {}", option.getTopOffset(), option.getBottomOffset());
 
             for (int j=0; j<option.getRowCount(); j++) {
                 String line = "";
@@ -110,7 +116,7 @@ public class PDFUtil {
                         word = word.trim();
                         canvas.beginText();
                         canvas.moveText(option.getLeftOffset() + c, height - (h + cellHeight * 2));
-                        PdfFont font = PdfFontFactory.createFont(bos.toByteArray(), PdfEncodings.CP1250, true);
+                        PdfFont font = PdfFontFactory.createFont(fontBuf, PdfEncodings.CP1250, true);
                         canvas.setFontAndSize(font, option.getCellHeight() * 1.7f);
                         canvas.showText(word);
                         canvas.endText();
