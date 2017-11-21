@@ -32,7 +32,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <text value="1. The quick brown fox jumps over the lazy dog&#10;2. The quick brown fox jumps over the lazy dog&#10;3. The quick brown fox jumps over the lazy dog&#10;4. The quick brown fox jumps over the lazy dog&#10;5. The quick brown fox jumps over the lazy dog&#10;6. The quick brown fox jumps over the lazy dog&#10;7. The quick brown fox jumps over the lazy dog&#10;8. The quick brown fox jumps over the lazy dog&#10;9. The quick brown fox jumps over the lazy dog&#10;10. The quick brown fox jumps over the lazy dog&#10;11. The quick brown fox jumps over the lazy dog&#10;12. The quick brown fox jumps over the lazy dog"/>
+                  <text value="The quick brown fox jumps over the lazy dog&#10;&#10;Jingle bells&#10;&#10;Dashing through the snow&#10;In a one horse open sleigh&#10;O'er the hills we go&#10;Laughing all the way.&#10;Bells on bobtail ring&#10;Making spirits bright.&#10;What fun it is to ride and sing&#10;A sleighing song tonight.&#10;&#10;Jingle bells jingle bells&#10;Jingle all the way!&#10;Oh what fun it is to ride&#10;In a one horse open sleigh" noi18n="true"/>
                 </properties>
               </component>
               <hspacer id="fbab0">

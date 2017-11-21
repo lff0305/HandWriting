@@ -5,6 +5,19 @@ package org.lff.handwriting;
  * @datetime 2017-11-20  15:34
  */
 public class Option {
+
+    private Option() {
+
+    }
+
+    public static Option getInstance() {
+        return HOLDER.instance;
+    }
+
+    static private class HOLDER {
+        static Option instance = new Option();
+    }
+
     private int rowCount = 12;
     private int leftOffset = 36;
     private int rightOffset = 36;
@@ -12,6 +25,26 @@ public class Option {
     private int topOffset = 36;
     private int bottomOffset = 36;
     private int rowGap = 36;
+
+    private boolean addEmptyLineAfter = false;
+
+    public boolean isSkipEmptyLine() {
+        return skipEmptyLine;
+    }
+
+    public void setSkipEmptyLine(boolean skipEmptyLine) {
+        this.skipEmptyLine = skipEmptyLine;
+    }
+
+    private boolean skipEmptyLine = true;
+
+    public boolean isAddEmptyLineAfter() {
+        return addEmptyLineAfter;
+    }
+
+    public void setAddEmptyLineAfter(boolean addEmptyLineAfter) {
+        this.addEmptyLineAfter = addEmptyLineAfter;
+    }
 
     public int getRowCount() {
         return rowCount;

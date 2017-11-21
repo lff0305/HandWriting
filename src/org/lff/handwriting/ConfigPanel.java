@@ -14,10 +14,13 @@ public class ConfigPanel extends JPanel {
     private JLabel label2 = new JLabel("Font color");
     private JLabel label3 = new JLabel("Line color");
     private JLabel label4 = new JLabel("Line style");
+    private JLabel label5 = new JLabel("Add empty line");
     private JComboBox cmbRowsCount = new JComboBox();
     private JComboBox cmbFontColor = new JComboBox();
     private JComboBox cmbLineColor = new JComboBox();
     private JComboBox cmbLineStyle = new JComboBox();
+    private JCheckBox chkEmptyLine = new JCheckBox("Add an empty line for each line");
+    private JCheckBox chkSkipEmptyLine = new JCheckBox("Skip empty lines");
     private MigLayout layout = new MigLayout("wrap 2");
 
     public ConfigPanel() {
@@ -45,5 +48,9 @@ public class ConfigPanel extends JPanel {
         this.add(cmbLineStyle);
         cmbLineStyle.addItem(" Dash ");
         cmbLineStyle.addItem(" Solid ");
+
+        this.add(chkEmptyLine);
+        this.add(chkSkipEmptyLine);
     }
+
 }

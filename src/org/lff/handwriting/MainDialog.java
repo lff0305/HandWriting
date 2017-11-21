@@ -90,6 +90,9 @@ public class MainDialog extends JDialog {
     }
 
     private void onOK() {
+
+        Option option = Option.getInstance();
+
         SwingUtilities.invokeLater(() -> {
             JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getDefaultDirectory());
             jfc.setDialogTitle("Set Filename");
@@ -103,12 +106,12 @@ public class MainDialog extends JDialog {
             }
             String file = jfc.getSelectedFile().getPath();
             pool.submit(() -> {
-                createPDF(file);
+                createPDF(file, option);
             });
         });
     }
 
-    private void createPDF(String file) {
+    private void createPDF(String file, Option option) {
         try {
             String fileName = !file.endsWith(".pdf") ? file + ".pdf" : file;
             File diskFile = new File(fileName);
@@ -124,7 +127,7 @@ public class MainDialog extends JDialog {
                     return;
                 }
             }
-            byte[] data = PDFUtil.getContent(this.textArea1.getText(), new Option());
+            byte[] data = PDFUtil.getContent(this.textArea1.getText(), Option.getInstance());
             FileOutputStream fw = new FileOutputStream(fileName);
             fw.write(data);
             fw.close();

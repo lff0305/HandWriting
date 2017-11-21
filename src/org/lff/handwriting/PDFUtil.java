@@ -35,25 +35,13 @@ public class PDFUtil {
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(bas));
         Color magentaColor = new DeviceCmyk(0.f, 1.f, 0.f, 0.f);
 
-        String[] lines = text.split("\\n");
+        List<String> lines = LinesUtil.build(text);
 
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        byte[] buf = new byte[4096];
-        int size = FONT.read(buf);
-        while (size != -1) {
-            bos.write(buf, 0, size);
-            size = FONT.read(buf);
-        }
-        bos.close();
+        final byte[] fontBuf = getFontBuffer();
 
-        logger.info("Font loaded. size = {}", bos.size());
+        logger.info("Font loaded. size = {}", fontBuf.length);
 
-        final byte[] fontBuf = bos.toByteArray();
-
-        int pageCount = lines.length / option.getRowCount();
-        if (lines.length % option.getRowCount() != 0) {
-            pageCount ++;
-        }
+        int pageCount = getPageCount(lines, option.getRowCount());
 
         for (int i=0; i<pageCount; i++) {
 
@@ -74,8 +62,8 @@ public class PDFUtil {
             for (int j=0; j<option.getRowCount(); j++) {
                 String line = "";
                 int index = i * option.getRowCount() + j;
-                if (index < lines.length) {
-                    line = lines[index];
+                if (index < lines.size()) {
+                    line = lines.get(i);
                 }
 
                 float h = option.getTopOffset() + (option.getCellHeight() * 4 + option.getRowGap()) * j;
@@ -134,22 +122,23 @@ public class PDFUtil {
         return bas.toByteArray();
     }
 
-    private static List<String> parseLines(String txt) {
-        String [] words = txt.split(" ");
-        List<String> result = new ArrayList<>();
-        String s = "";
-        for (String word : words) {
-            if (s.length() + word.length() + 1 < SIZE_LIMIT) {
-                s += word;
-                s += " ";
-            } else {
-                result.add(s);
-                s = "";
-            }
+    private static int getPageCount(List<String> lines, int rowCount) {
+        int pageCount = lines.size() / rowCount;
+        if (lines.size() % rowCount != 0) {
+            pageCount ++;
         }
-        if (!s.isEmpty()) {
-            result.add(s);
+        return pageCount;
+    }
+
+    private static byte[] getFontBuffer() throws IOException {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        byte[] buf = new byte[4096];
+        int size = FONT.read(buf);
+        while (size != -1) {
+            bos.write(buf, 0, size);
+            size = FONT.read(buf);
         }
-        return result;
+        bos.close();
+        return bos.toByteArray();
     }
 }
