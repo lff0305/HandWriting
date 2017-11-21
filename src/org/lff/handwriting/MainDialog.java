@@ -80,7 +80,9 @@ public class MainDialog extends JDialog {
 
             private void preview() {
                 String text = textArea1.getText();
-                PreviewUtil.preview(scrollPane, previewPanel, text);
+                Option option = Option.getInstance();
+                setOptions(option);
+                PreviewUtil.preview(scrollPane, previewPanel, text, option);
             }
         });
 

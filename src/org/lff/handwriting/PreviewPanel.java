@@ -1,19 +1,27 @@
 package org.lff.handwriting;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.invoke.MethodHandles;
 
 /**
  * @author Feifei Liu
  * @datetime 2017-11-17  10:16
  */
 public class PreviewPanel extends JPanel {
+
+    private static Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+
     private static final long serialVersionUID = -4929347747026022144L;
     private final JScrollPane scrollPane;
+    private Option option;
 
     public PreviewPanel(JScrollPane scrollPane) {
         this.scrollPane = scrollPane;
@@ -36,6 +44,9 @@ public class PreviewPanel extends JPanel {
         this.text = text;
     }
 
+    public void updateOption(Option option) {
+        this.option = option;
+    }
     public void updateRowCount(int rowCount) {
         this.rowCount = rowCount;
         right = this.getWidth() - this.rightOffset;
@@ -76,9 +87,9 @@ public class PreviewPanel extends JPanel {
             e.printStackTrace();
         }
 
-        String[] lines = text.split("\\n");
+        java.util.List<String> lines = LinesUtil.build(text, option);
 
-        for (int i = 0; i < rowCount && i < lines.length; i++) {
+        for (int i = 0; i < rowCount && i < lines.size(); i++) {
             int h = topOffset + (cellHeight * 4 + rowGap) * i;
             g2d.setColor(Color.pink);
             g2d.drawLine(leftOffset, h, right, h);
@@ -88,27 +99,22 @@ public class PreviewPanel extends JPanel {
 
             g2d.setColor(Color.BLACK);
             g2d.setFont(sizedFont);
-            String line = lines[i];
-            if (line != null) {
-                line = line.trim();
-                String[] words = line.split("( )+");
-                int c = 0;
-                for (int j=0; j<words.length; j++) {
-                    String word = words[j];
-                    word = word.trim();
-                    g2d.drawString(word, leftOffset + c, h + cellHeight * 2);
-                    AffineTransform affinetransform = new AffineTransform();
-                    FontRenderContext frc = new FontRenderContext(affinetransform,true,true);
-                    int textwidth = (int)(sizedFont.getStringBounds(word + " ", frc).getWidth());
-                    c += textwidth;
-                }
+            String line = lines.get(i);
+            line = line.trim();
+            String[] words = line.split("( )+");
+            int c = 0;
+            for (int j=0; j<words.length; j++) {
+                String word = words[j];
+                word = word.trim();
+                g2d.drawString(word, leftOffset + c, h + cellHeight * 2);
+                AffineTransform affinetransform = new AffineTransform();
+                FontRenderContext frc = new FontRenderContext(affinetransform,true,true);
+                int textwidth = (int)(sizedFont.getStringBounds(word + " ", frc).getWidth());
+                c += textwidth;
             }
         }
 
         g2d.dispose();
-
-        System.out.println("Preview Updated.");
-        System.out.println(this.getHeight());
     }
 
     public void setUpdate(boolean update) {
