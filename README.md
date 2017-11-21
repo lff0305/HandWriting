@@ -11,4 +11,15 @@ With this program, user can generate / print PDF files with English Letters.
 
 Java8+ is required.
 
+# Usage
+![Main](https://github.com/lff0305/HandWriting/blob/master/resources/main.png)
 
+Run and paste the text into left input area. Change the configuration on the right side.
+
+Preview if needed.
+
+Click "Generate PDF" to save the output PDF file.
+
+Print it with your printer and ask your kids to practise writing on it.
+
+That's all.
