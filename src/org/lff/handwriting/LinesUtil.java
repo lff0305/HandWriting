@@ -8,8 +8,7 @@ import java.util.List;
  * @datetime 2017-11-21  9:47
  */
 public class LinesUtil {
-    public static List<String> build(String text) {
-        Option option = Option.getInstance();
+    public static List<String> build(String text, Option option) {
         List<String> result = new ArrayList<>();
         String[] lines = text.split("\\n");
         for (String line : lines) {

@@ -32,7 +32,7 @@ public class PDFUtil {
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(bas));
         Color magentaColor = new DeviceCmyk(0.f, 1.f, 0.f, 0.f);
 
-        List<String> lines = LinesUtil.build(text);
+        List<String> lines = LinesUtil.build(text, option);
 
         final byte[] fontBuf = getFontBuffer();
 
