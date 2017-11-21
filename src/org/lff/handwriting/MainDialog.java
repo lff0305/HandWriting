@@ -32,6 +32,7 @@ public class MainDialog extends JDialog {
     private JTabbedPane tabbedPane;
     private JPanel previewPanel;
     private JScrollPane scrollPane;
+    private JMenuBar menuBar;
 
     public MainDialog() {
         setContentPane(contentPane);
@@ -149,6 +150,11 @@ public class MainDialog extends JDialog {
         System.exit(0);
     }
 
+    private void onAbout() {
+        AboutDialog d = new AboutDialog();
+        d.init(this);
+    }
+
     private PreviewPanel getPreviewPanel() {
         return (PreviewPanel) previewPanel;
     }
@@ -159,6 +165,25 @@ public class MainDialog extends JDialog {
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         configPanel = new ConfigPanel();
+
+        menuBar = new JMenuBar();
+        setJMenuBar(menuBar);
+        JMenu menuFile = new JMenu("File");
+        JMenu menuAbout = new JMenu("Help");
+
+        JMenuItem menuItemExit = new JMenuItem("Exit", null);
+        JMenuItem menuItemAbout = new JMenuItem("About", null);
+        menuAbout.add(menuItemAbout);
+        menuFile.add(menuItemExit);
+        menuBar.add(menuFile);
+        menuBar.add(menuAbout);
+
+        menuItemExit.addActionListener( l-> {
+            onCancel();
+        });
+        menuItemAbout.addActionListener( l -> {
+            onAbout();
+        });
     }
 
     private String getVersion() {
@@ -167,11 +192,13 @@ public class MainDialog extends JDialog {
             p.load(this.getClass().getResourceAsStream("/org/lff/handwriting/version.properties"));
         } catch (IOException e) {
             logger.error("Cannot load version.properties", e);
+            return "NA";
         }
         String major = p.getProperty("major");
         String minor = p.getProperty("minor");
+        String build = p.getProperty("buildNo");
         String timestamp = p.getProperty("timestamp");
-        return major + "." + minor + " " + timestamp;
+        return major + "." + minor + " build " + build + " " + timestamp;
     }
 
     public void setOptions(Option options) {
