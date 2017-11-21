@@ -60,7 +60,7 @@ public class PDFUtil {
                 String line = "";
                 int index = i * option.getRowCount() + j;
                 if (index < lines.size()) {
-                    line = lines.get(i);
+                    line = lines.get(index);
                 }
 
                 float h = option.getTopOffset() + (option.getCellHeight() * 4 + option.getRowGap()) * j;
