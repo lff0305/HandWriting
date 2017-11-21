@@ -3,6 +3,7 @@ package org.lff.handwriting;
 import com.itextpdf.io.font.PdfEncodings;
 import com.itextpdf.kernel.color.Color;
 import com.itextpdf.kernel.color.DeviceCmyk;
+import com.itextpdf.kernel.color.DeviceRgb;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -30,7 +31,7 @@ public class PDFUtil {
     public static byte[] getContent(String text, Option option) throws IOException {
         ByteArrayOutputStream bas = new ByteArrayOutputStream();
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(bas));
-        Color magentaColor = new DeviceCmyk(0.f, 1.f, 0.f, 0.f);
+        Color magentaColor = buildLineColor(option);
 
         List<String> lines = LinesUtil.build(text, option);
 
@@ -114,6 +115,11 @@ public class PDFUtil {
         pdfDoc.close();
 
         return bas.toByteArray();
+    }
+
+    private static Color buildLineColor(Option option) {
+        java.awt.Color color = ColorUtil.getColor(option.getLineColor());
+        return new DeviceRgb(color.getRed(), color.getBlue(), color.getGreen());
     }
 
     private static int getPageCount(List<String> lines, int rowCount) {

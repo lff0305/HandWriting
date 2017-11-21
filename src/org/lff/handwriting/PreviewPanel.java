@@ -91,7 +91,7 @@ public class PreviewPanel extends JPanel {
 
         for (int i = 0; i < rowCount && i < lines.size(); i++) {
             int h = topOffset + (cellHeight * 4 + rowGap) * i;
-            g2d.setColor(Color.pink);
+            g2d.setColor(ColorUtil.getColor(option.getLineColor()));
             g2d.drawLine(leftOffset, h, right, h);
             g2d.drawLine(leftOffset, h + cellHeight, right, h + cellHeight);
             g2d.drawLine(leftOffset, h + 2 * cellHeight, right, h + 2 * cellHeight);

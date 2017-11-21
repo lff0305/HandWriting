@@ -20,6 +20,10 @@ public class Option {
         this.lineColor = lineColor;
     }
 
+    public String getLineColor() {
+        return lineColor;
+    }
+
     static private class HOLDER {
         static Option instance = new Option();
     }
