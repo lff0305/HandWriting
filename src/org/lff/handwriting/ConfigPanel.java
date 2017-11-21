@@ -49,7 +49,7 @@ public class ConfigPanel extends JPanel {
         cmbLineStyle.addItem(" Dash ");
         cmbLineStyle.addItem(" Solid ");
 
-        this.add(chkEmptyLine);
+        this.add(chkEmptyLine, "wrap");
         this.add(chkSkipEmptyLine);
     }
 
