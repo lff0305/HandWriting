@@ -43,6 +43,7 @@ public class ConfigPanel extends JPanel {
         this.add(cmbLineColor);
         cmbLineColor.addItem(" Magenta ");
         cmbLineColor.addItem(" Black ");
+        cmbLineColor.addItem(" Red ");
         cmbLineColor.addItem(" Gray ");
         this.add(label4);
         this.add(cmbLineStyle);
