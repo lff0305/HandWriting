@@ -50,8 +50,8 @@ public class ConfigPanel extends JPanel {
         cmbLineStyle.addItem(" Dash ");
         cmbLineStyle.addItem(" Solid ");
 
-        this.add(chkEmptyLine, "wrap");
-        this.add(chkSkipEmptyLine);
+        this.add(chkEmptyLine, "span 2");
+        this.add(chkSkipEmptyLine, "span 2");
     }
 
     public boolean isSkipEmptyLine() {
