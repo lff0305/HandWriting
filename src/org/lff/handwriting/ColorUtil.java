@@ -18,7 +18,7 @@ public class ColorUtil {
 
     private static Map<String, String> colorMap = new HashMap<>();
     static {
-        colorMap.put("MAGENTA", "FF00FF");
+        colorMap.put("MAGENTA", "0xFF00FF");
     }
 
     public static Color getColor(String lineColor) {
