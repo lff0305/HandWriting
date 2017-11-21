@@ -16,7 +16,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.invoke.MethodHandles;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,8 +24,6 @@ import java.util.List;
 public class PDFUtil {
 
     private static Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-
-    private static final int SIZE_LIMIT = 40;
 
     public static final InputStream FONT = PDFUtil.class.getResourceAsStream("/font/JARDOTTY.ttf");
 
@@ -111,10 +108,7 @@ public class PDFUtil {
                         c += font.getWidth(word + " ", option.getCellHeight() * 1.7f);
                     }
                 }
-
-
             }
-
         }
 
         pdfDoc.close();
