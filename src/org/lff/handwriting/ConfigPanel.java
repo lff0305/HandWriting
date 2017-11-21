@@ -53,4 +53,11 @@ public class ConfigPanel extends JPanel {
         this.add(chkSkipEmptyLine);
     }
 
+    public boolean isSkipEmptyLine() {
+        return this.chkSkipEmptyLine.isSelected();
+    }
+
+    public boolean isAddEmptyLine() {
+        return this.chkEmptyLine.isSelected();
+    }
 }

@@ -92,6 +92,7 @@ public class MainDialog extends JDialog {
     private void onOK() {
 
         Option option = Option.getInstance();
+        setOptions(option);
 
         SwingUtilities.invokeLater(() -> {
             JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getDefaultDirectory());
@@ -100,7 +101,7 @@ public class MainDialog extends JDialog {
             FileNameExtensionFilter filter = new FileNameExtensionFilter("PDF Files", "pdf");
             jfc.addChoosableFileFilter(filter);
 
-            int returnValue = jfc.showOpenDialog(null);
+            int returnValue = jfc.showOpenDialog(contentPane);
             if (returnValue != JFileChooser.APPROVE_OPTION) {
                 return;
             }
@@ -127,7 +128,7 @@ public class MainDialog extends JDialog {
                     return;
                 }
             }
-            byte[] data = PDFUtil.getContent(this.textArea1.getText(), Option.getInstance());
+            byte[] data = PDFUtil.getContent(this.textArea1.getText(), option);
             FileOutputStream fw = new FileOutputStream(fileName);
             fw.write(data);
             fw.close();
@@ -171,5 +172,11 @@ public class MainDialog extends JDialog {
         String minor = p.getProperty("minor");
         String timestamp = p.getProperty("timestamp");
         return major + "." + minor + " " + timestamp;
+    }
+
+    public void setOptions(Option options) {
+        ConfigPanel panel = (ConfigPanel) configPanel;
+        options.setAddEmptyLineAfter(panel.isAddEmptyLine());
+        options.setSkipEmptyLine(panel.isSkipEmptyLine());
     }
 }
