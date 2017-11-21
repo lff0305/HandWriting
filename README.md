@@ -7,12 +7,13 @@ This is a app to help to create writing scripts for practising English Hand-Writ
 
 With this program, user can generate / print PDF files with English Letters.
 
-![Output](https://github.com/lff0305/HandWriting/blob/master/resources/2.png)
+<img src="https://github.com/lff0305/HandWriting/blob/master/resources/2.png" width="450px"/>
 
 Java8+ is required.
 
 # Usage
-![Main](https://github.com/lff0305/HandWriting/blob/master/resources/main.png)
+
+<img src="https://github.com/lff0305/HandWriting/blob/master/resources/main.png" width="450px"/>
 
 Run and paste the text into left input area. Change the configuration on the right side.
 
