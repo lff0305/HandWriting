@@ -207,5 +207,6 @@ public class MainDialog extends JDialog {
         ConfigPanel panel = (ConfigPanel) configPanel;
         options.setAddEmptyLineAfter(panel.isAddEmptyLine());
         options.setSkipEmptyLine(panel.isSkipEmptyLine());
+        options.setLineColor(panel.getLineColor());
     }
 }

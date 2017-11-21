@@ -60,4 +60,8 @@ public class ConfigPanel extends JPanel {
     public boolean isAddEmptyLine() {
         return this.chkEmptyLine.isSelected();
     }
+
+    public String getLineColor() {
+        return (String)this.cmbLineColor.getSelectedItem();
+    }
 }

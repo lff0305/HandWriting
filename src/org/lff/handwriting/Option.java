@@ -6,12 +6,18 @@ package org.lff.handwriting;
  */
 public class Option {
 
+    private String lineColor;
+
     private Option() {
 
     }
 
     public static Option getInstance() {
         return HOLDER.instance;
+    }
+
+    public void setLineColor(String lineColor) {
+        this.lineColor = lineColor;
     }
 
     static private class HOLDER {
