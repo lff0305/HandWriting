@@ -12,7 +12,7 @@ public class Main {
         dlg.setSize(800, 600);
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        dlg.setLocation(dim.width / 2 - dlg.getSize().width / 2, dim.height / 2 - dlg.getSize().height / 2);
+        dlg.setLocation((int)((dim.width / 2 - dlg.getSize().width / 2) * 0.6), dim.height / 2 - dlg.getSize().height / 2);
         dlg.setVisible(true);
     }
 }
