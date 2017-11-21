@@ -1,5 +1,6 @@
 package org.lff.handwriting;
 
+import net.miginfocom.swing.MigLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,6 +9,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.SimpleAttributeSet;
+import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -24,6 +28,9 @@ public class MainDialog extends JDialog {
     private static ExecutorService pool = Executors.newCachedThreadPool();
 
     private static final long serialVersionUID = 2401381172141590048L;
+
+    private static JTextPane staticPane;
+
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
@@ -32,9 +39,11 @@ public class MainDialog extends JDialog {
     private JTabbedPane tabbedPane;
     private JPanel previewPanel;
     private JScrollPane scrollPane;
+    private JPanel logPanel;
     private JMenuBar menuBar;
+    private JTextPane logPane;
 
-    public MainDialog() {
+    private MainDialog() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -56,6 +65,11 @@ public class MainDialog extends JDialog {
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 onCancel();
+            }
+
+            @Override
+            public void windowOpened(WindowEvent e) {
+                finished = true;
             }
         });
 
@@ -186,6 +200,11 @@ public class MainDialog extends JDialog {
         menuItemAbout.addActionListener( l -> {
             onAbout();
         });
+
+        logPanel = new JPanel();
+        logPane = new JTextPane();
+        logPanel.setLayout(new BorderLayout(0, 0));
+        logPanel.add(logPane);
     }
 
     private String getVersion() {
@@ -209,4 +228,27 @@ public class MainDialog extends JDialog {
         options.setSkipEmptyLine(panel.isSkipEmptyLine());
         options.setLineColor(panel.getLineColor());
     }
+
+    public static JTextPane getTextPane() {
+        if (!getInstance().finished) {
+            return null;
+        }
+        return getInstance().logPane;
+    }
+
+    public static MainDialog getInstance() {
+        if (instance == null) {
+            instance = new MainDialog();
+        }
+        return instance;
+    }
+
+    static MainDialog instance;
+
+    private boolean finished;
+
+    public void finished(boolean b) {
+        this.finished = true;
+    }
 }
+

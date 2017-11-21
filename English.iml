@@ -11,5 +11,6 @@
     <orderEntry type="library" name="miglayout-swing-5.0" level="project" />
     <orderEntry type="library" name="forms_rt" level="project" />
     <orderEntry type="library" name="slf4j-api-1.7.25" level="project" />
+    <orderEntry type="library" name="logback-classic-1.2.3" level="project" />
   </component>
 </module>

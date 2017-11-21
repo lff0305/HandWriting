@@ -8,7 +8,7 @@ import java.awt.*;
  */
 public class Main {
     public static void main(String[] argu) {
-        MainDialog dlg = new MainDialog();
+        MainDialog dlg = MainDialog.getInstance();
         dlg.setSize(800, 600);
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
