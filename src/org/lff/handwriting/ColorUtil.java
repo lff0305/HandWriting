@@ -22,6 +22,7 @@ public class ColorUtil {
         colorMap.put("BLACK", "0x000000");
         colorMap.put("RED", "0xFF0000");
         colorMap.put("GRAY", "0x808080");
+
     }
 
     public static Color getColor(String lineColor) {

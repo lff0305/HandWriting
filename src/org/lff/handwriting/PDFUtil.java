@@ -41,10 +41,13 @@ public class PDFUtil {
 
         int pageCount = getPageCount(lines, option.getRowCount());
 
-        for (int i=0; i<pageCount; i++) {
+        String wrapped = "";
+
+        for (int i=0; i<pageCount || !wrapped.isEmpty(); i++) {
 
             PdfPage page = pdfDoc.addNewPage();
             PdfCanvas canvas = new PdfCanvas(page);
+
             int width = (int) page.getPageSize().getWidth();
             int height = (int) page.getPageSize().getHeight();
 
@@ -63,6 +66,9 @@ public class PDFUtil {
                 if (index < lines.size()) {
                     line = lines.get(index);
                 }
+
+                line = wrapped + line;
+                wrapped = "";
 
                 float h = option.getTopOffset() + (option.getCellHeight() * 4 + option.getRowGap()) * j;
 
@@ -91,8 +97,6 @@ public class PDFUtil {
                         .lineTo(width - option.getRightOffset(),  height - (3 * option.getCellHeight() + h))
                         .closePathStroke();
 
-
-
                 if (line != null) {
                     line = line.trim();
                     String[] words = line.split("( )+");
@@ -100,13 +104,19 @@ public class PDFUtil {
                     for (int k=0; k<words.length; k++) {
                         String word = words[k];
                         word = word.trim();
-                        canvas.beginText();
-                        canvas.moveText(option.getLeftOffset() + c, height - (h + cellHeight * 2));
                         PdfFont font = PdfFontFactory.createFont(fontBuf, PdfEncodings.CP1250, true);
                         canvas.setFontAndSize(font, option.getCellHeight() * 1.7f);
+                        float wordWidth = font.getWidth(word + " ", option.getCellHeight() * 1.7f);
+                        if (option.getLeftOffset() + c + wordWidth > width - option.getRightOffset()) {
+                            wrapped += word;
+                            wrapped += " ";
+                            continue;
+                        }
+                        canvas.beginText();
+                        canvas.moveText(option.getLeftOffset() + c, height - (h + cellHeight * 2));
                         canvas.showText(word);
                         canvas.endText();
-                        c += font.getWidth(word + " ", option.getCellHeight() * 1.7f);
+                        c += wordWidth;
                     }
                 }
             }
@@ -119,7 +129,7 @@ public class PDFUtil {
 
     private static Color buildLineColor(Option option) {
         java.awt.Color color = ColorUtil.getColor(option.getLineColor());
-        return new DeviceRgb(color.getRed(), color.getBlue(), color.getGreen());
+        return new DeviceRgb(color.getRed(), color.getGreen(), color.getBlue());
     }
 
     private static int getPageCount(List<String> lines, int rowCount) {
