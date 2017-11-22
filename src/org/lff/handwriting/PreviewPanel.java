@@ -53,9 +53,9 @@ public class PreviewPanel extends JPanel {
     }
 
     public void updateSize() {
-        logger.info("Update " + this.getHeight());
+        logger.info("Current height is {}", this.getHeight());
         int height = topOffset + bottomOffset + cellHeight * 4 * rowCount + rowGap * ( rowCount - 1);
-        logger.info("Set new " + height);
+        logger.info("Set new width {}", height);
         setPreferredSize(new Dimension(this.getWidth(), height));
     }
 

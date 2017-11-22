@@ -31,98 +31,103 @@ public class PDFUtil {
     public static byte[] getContent(String text, Option option) throws IOException {
         ByteArrayOutputStream bas = new ByteArrayOutputStream();
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(bas));
-        Color magentaColor = buildLineColor(option);
 
-        List<String> lines = LinesUtil.build(text, option);
+        try {
+            Color magentaColor = buildLineColor(option);
 
-        final byte[] fontBuf = getFontBuffer();
+            List<String> lines = LinesUtil.build(text, option);
 
-        logger.info("Font loaded. size = {}", fontBuf.length);
+            final byte[] fontBuf = getFontBuffer();
 
-        int pageCount = getPageCount(lines, option.getRowCount());
+            logger.info("Font loaded. size = {}", fontBuf.length);
 
-        String wrapped = "";
+            int pageCount = getPageCount(lines, option.getRowCount());
 
-        for (int i=0; i<pageCount || !wrapped.isEmpty(); i++) {
+            String wrapped = "";
 
-            PdfPage page = pdfDoc.addNewPage();
-            PdfCanvas canvas = new PdfCanvas(page);
+            for (int i = 0; i < pageCount || !wrapped.isEmpty(); i++) {
 
-            int width = (int) page.getPageSize().getWidth();
-            int height = (int) page.getPageSize().getHeight();
+                PdfPage page = pdfDoc.addNewPage();
+                PdfCanvas canvas = new PdfCanvas(page);
+
+                int width = (int) page.getPageSize().getWidth();
+                int height = (int) page.getPageSize().getHeight();
 
 
-            int contentSize = height - option.getTopOffset() - option.getBottomOffset();
-            float cellHeight = (float)((contentSize + option.getRowGap() - option.getRowCount() * option.getRowGap()) / ( 4.0 * option.getRowCount()));
-            option.setCellHeight(cellHeight);
+                int contentSize = height - option.getTopOffset() - option.getBottomOffset();
+                float cellHeight = (float) ((contentSize + option.getRowGap() - option.getRowCount() * option.getRowGap()) / (4.0 * option.getRowCount()));
+                option.setCellHeight(cellHeight);
 
-            logger.info("Width = {} Height = {} rowCount = {}", width, height, option.getRowCount());
-            logger.info("CellHeight = {}, Gap Size = {} ", option.getCellHeight(), option.getRowGap());
-            logger.info("TopOffset = {}, BottomOffset = {}", option.getTopOffset(), option.getBottomOffset());
+                logger.info("Width = {} Height = {} rowCount = {}", width, height, option.getRowCount());
+                logger.info("CellHeight = {}, Gap Size = {} ", option.getCellHeight(), option.getRowGap());
+                logger.info("TopOffset = {}, BottomOffset = {}", option.getTopOffset(), option.getBottomOffset());
 
-            for (int j=0; j<option.getRowCount(); j++) {
-                String line = "";
-                int index = i * option.getRowCount() + j;
-                if (index < lines.size()) {
-                    line = lines.get(index);
-                }
+                for (int j = 0; j < option.getRowCount(); j++) {
+                    String line = "";
+                    int index = i * option.getRowCount() + j;
+                    if (index < lines.size()) {
+                        line = lines.get(index);
+                    }
 
-                line = wrapped + line;
-                wrapped = "";
+                    logger.info("Get line = {}, wrapped = {}", line, wrapped);
 
-                float h = option.getTopOffset() + (option.getCellHeight() * 4 + option.getRowGap()) * j;
+                    line = wrapped + line;
+                    wrapped = "";
 
-                canvas.setStrokeColor(magentaColor)
-                        .setLineDash(3, 3, 0.5f)
-                        .setLineWidth(0.4f)
-                        .moveTo(option.getLeftOffset(), height - (h))
-                        .lineTo(width - option.getRightOffset(), height - (h))
-                        .closePathStroke();
-                canvas.setStrokeColor(magentaColor)
-                        .setLineDash(3, 3, 0.5f)
-                        .setLineWidth(0.4f)
-                        .moveTo(option.getLeftOffset(), height - (option.getCellHeight() + h))
-                        .lineTo(width - option.getRightOffset(), height - (option.getCellHeight() + h))
-                        .closePathStroke();
-                canvas.setStrokeColor(magentaColor)
-                        .setLineDash(3, 3, 0.5f)
-                        .setLineWidth(0.4f)
-                        .moveTo(option.getLeftOffset(),  height - (2 * option.getCellHeight() + h))
-                        .lineTo(width - option.getRightOffset(),  height - (2 * option.getCellHeight() + h))
-                        .closePathStroke();
-                canvas.setStrokeColor(magentaColor)
-                        .setLineDash(3, 3, 0.5f)
-                        .setLineWidth(0.4f)
-                        .moveTo(option.getLeftOffset(), height - (3 * option.getCellHeight() + h))
-                        .lineTo(width - option.getRightOffset(),  height - (3 * option.getCellHeight() + h))
-                        .closePathStroke();
+                    float h = option.getTopOffset() + (option.getCellHeight() * 4 + option.getRowGap()) * j;
 
-                if (line != null) {
-                    line = line.trim();
-                    String[] words = line.split("( )+");
-                    int c = 0;
-                    for (int k=0; k<words.length; k++) {
-                        String word = words[k];
-                        word = word.trim();
-                        PdfFont font = PdfFontFactory.createFont(fontBuf, PdfEncodings.CP1250, true);
-                        canvas.setFontAndSize(font, option.getCellHeight() * 1.7f);
-                        float wordWidth = font.getWidth(word + " ", option.getCellHeight() * 1.7f);
-                        if (option.getLeftOffset() + c + wordWidth > width - option.getRightOffset()) {
-                            wrapped += word;
-                            wrapped += " ";
-                            continue;
+                    canvas.setStrokeColor(magentaColor)
+                            .setLineDash(3, 3, 0.5f)
+                            .setLineWidth(0.4f)
+                            .moveTo(option.getLeftOffset(), height - (h))
+                            .lineTo(width - option.getRightOffset(), height - (h))
+                            .closePathStroke();
+                    canvas.setStrokeColor(magentaColor)
+                            .setLineDash(3, 3, 0.5f)
+                            .setLineWidth(0.4f)
+                            .moveTo(option.getLeftOffset(), height - (option.getCellHeight() + h))
+                            .lineTo(width - option.getRightOffset(), height - (option.getCellHeight() + h))
+                            .closePathStroke();
+                    canvas.setStrokeColor(magentaColor)
+                            .setLineDash(3, 3, 0.5f)
+                            .setLineWidth(0.4f)
+                            .moveTo(option.getLeftOffset(), height - (2 * option.getCellHeight() + h))
+                            .lineTo(width - option.getRightOffset(), height - (2 * option.getCellHeight() + h))
+                            .closePathStroke();
+                    canvas.setStrokeColor(magentaColor)
+                            .setLineDash(3, 3, 0.5f)
+                            .setLineWidth(0.4f)
+                            .moveTo(option.getLeftOffset(), height - (3 * option.getCellHeight() + h))
+                            .lineTo(width - option.getRightOffset(), height - (3 * option.getCellHeight() + h))
+                            .closePathStroke();
+
+                    if (line != null) {
+                        line = line.trim();
+                        String[] words = line.split("( )+");
+                        int c = 0;
+                        for (int k = 0; k < words.length; k++) {
+                            String word = words[k];
+                            word = word.trim();
+                            PdfFont font = PdfFontFactory.createFont(fontBuf, PdfEncodings.CP1250, true);
+                            canvas.setFontAndSize(font, option.getCellHeight() * 1.7f);
+                            float wordWidth = font.getWidth(word + " ", option.getCellHeight() * 1.7f);
+                            if (option.getLeftOffset() + c + wordWidth > width - option.getRightOffset()) {
+                                wrapped += word;
+                                wrapped += " ";
+                                continue;
+                            }
+                            canvas.beginText();
+                            canvas.moveText(option.getLeftOffset() + c, height - (h + cellHeight * 2));
+                            canvas.showText(word);
+                            canvas.endText();
+                            c += wordWidth;
                         }
-                        canvas.beginText();
-                        canvas.moveText(option.getLeftOffset() + c, height - (h + cellHeight * 2));
-                        canvas.showText(word);
-                        canvas.endText();
-                        c += wordWidth;
                     }
                 }
             }
+        } finally {
+            pdfDoc.close();
         }
-
-        pdfDoc.close();
 
         return bas.toByteArray();
     }
