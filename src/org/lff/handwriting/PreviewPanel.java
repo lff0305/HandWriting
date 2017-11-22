@@ -89,6 +89,8 @@ public class PreviewPanel extends JPanel {
 
         java.util.List<String> lines = LinesUtil.build(text, option);
 
+        String wrap = "";
+
         for (int i = 0; i < rowCount && i < lines.size(); i++) {
             int h = topOffset + (cellHeight * 4 + rowGap) * i;
             g2d.setColor(ColorUtil.getColor(option.getLineColor()));
@@ -101,15 +103,24 @@ public class PreviewPanel extends JPanel {
             g2d.setFont(sizedFont);
             String line = lines.get(i);
             line = line.trim();
+            if (!wrap.isEmpty()) {
+                line = wrap + line;
+            }
+            wrap = "";
             String[] words = line.split("( )+");
             int c = 0;
             for (int j=0; j<words.length; j++) {
                 String word = words[j];
                 word = word.trim();
-                g2d.drawString(word, leftOffset + c, h + cellHeight * 2);
                 AffineTransform affinetransform = new AffineTransform();
                 FontRenderContext frc = new FontRenderContext(affinetransform,true,true);
                 int textwidth = (int)(sizedFont.getStringBounds(word + " ", frc).getWidth());
+                if (leftOffset + c + textwidth > right) {
+                    wrap += word;
+                    wrap += " ";
+                    continue;
+                }
+                g2d.drawString(word, leftOffset + c, h + cellHeight * 2);
                 c += textwidth;
             }
         }
