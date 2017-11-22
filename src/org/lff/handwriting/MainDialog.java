@@ -130,6 +130,9 @@ public class MainDialog extends JDialog {
     }
 
     private void createPDF(String file, Option option) {
+
+        FileOutputStream fw = null;
+
         try {
             String fileName = !file.endsWith(".pdf") ? file + ".pdf" : file;
             File diskFile = new File(fileName);
@@ -142,17 +145,25 @@ public class MainDialog extends JDialog {
             if (diskFile.exists()) {
                 int r = JOptionPane.showConfirmDialog(contentPane, fileName + " exists. Overwrite?", "Warning", JOptionPane.YES_NO_OPTION);
                 if (r == JOptionPane.NO_OPTION) {
+                    logger.info(fileName + " already exists. Do not continue");
                     return;
                 }
+                logger.info(fileName + " already exists. User chose to overwrite.");
             }
             byte[] data = PDFUtil.getContent(this.textArea1.getText(), option);
-            FileOutputStream fw = new FileOutputStream(fileName);
+            fw = new FileOutputStream(fileName);
             fw.write(data);
             fw.close();
+            logger.info(fileName + " saved successfully.");
             SwingUtilities.invokeLater(() -> {
                 JOptionPane.showMessageDialog(contentPane, "File " + fileName + " created.");
             });
         } catch (IOException e) {
+            logger.error(e.getMessage(), e);
+            try {
+                fw.close();
+            } catch (IOException e1) {
+            }
             SwingUtilities.invokeLater(() -> {
                 JOptionPane.showMessageDialog(contentPane, "File not created : " + e.getMessage());
             });
