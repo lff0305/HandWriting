@@ -76,26 +76,25 @@ public class PDFUtil {
 
                     float h = option.getTopOffset() + (option.getCellHeight() * 4 + option.getRowGap()) * j;
 
+
+                    applyLineStyle(option, canvas);
+
                     canvas.setStrokeColor(magentaColor)
-                            .setLineDash(3, 3, 0.5f)
                             .setLineWidth(0.4f)
                             .moveTo(option.getLeftOffset(), height - (h))
                             .lineTo(width - option.getRightOffset(), height - (h))
                             .closePathStroke();
                     canvas.setStrokeColor(magentaColor)
-                            .setLineDash(3, 3, 0.5f)
                             .setLineWidth(0.4f)
                             .moveTo(option.getLeftOffset(), height - (option.getCellHeight() + h))
                             .lineTo(width - option.getRightOffset(), height - (option.getCellHeight() + h))
                             .closePathStroke();
                     canvas.setStrokeColor(magentaColor)
-                            .setLineDash(3, 3, 0.5f)
                             .setLineWidth(0.4f)
                             .moveTo(option.getLeftOffset(), height - (2 * option.getCellHeight() + h))
                             .lineTo(width - option.getRightOffset(), height - (2 * option.getCellHeight() + h))
                             .closePathStroke();
                     canvas.setStrokeColor(magentaColor)
-                            .setLineDash(3, 3, 0.5f)
                             .setLineWidth(0.4f)
                             .moveTo(option.getLeftOffset(), height - (3 * option.getCellHeight() + h))
                             .lineTo(width - option.getRightOffset(), height - (3 * option.getCellHeight() + h))
@@ -130,6 +129,14 @@ public class PDFUtil {
         }
 
         return bas.toByteArray();
+    }
+
+    private static void applyLineStyle(Option option, PdfCanvas canvas) {
+        if (option.getLineStyle() == LineStyle.DASH) {
+             canvas.setLineDash(3, 3, 0.5f);
+        }
+        if (option.getLineStyle() == LineStyle.SOLID) {
+        }
     }
 
     private static Color buildLineColor(Option option) {
