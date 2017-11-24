@@ -129,5 +129,24 @@ public class Option {
         this.cellHeight = cellHeight;
     }
 
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Option{");
+        sb.append("lineColor='").append(lineColor).append('\'');
+        sb.append(", lineStyle=").append(lineStyle);
+        sb.append(", rowCount=").append(rowCount);
+        sb.append(", leftOffset=").append(leftOffset);
+        sb.append(", rightOffset=").append(rightOffset);
+        sb.append(", right=").append(right);
+        sb.append(", topOffset=").append(topOffset);
+        sb.append(", bottomOffset=").append(bottomOffset);
+        sb.append(", rowGap=").append(rowGap);
+        sb.append(", addEmptyLineAfter=").append(addEmptyLineAfter);
+        sb.append(", skipEmptyLine=").append(skipEmptyLine);
+        sb.append(", cellHeight=").append(cellHeight);
+        sb.append('}');
+        return sb.toString();
+    }
+
     private float cellHeight = 12;
 }
