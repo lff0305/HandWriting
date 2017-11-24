@@ -2,7 +2,6 @@ package org.lff.handwriting;
 
 import com.itextpdf.io.font.PdfEncodings;
 import com.itextpdf.kernel.color.Color;
-import com.itextpdf.kernel.color.DeviceCmyk;
 import com.itextpdf.kernel.color.DeviceRgb;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
@@ -33,7 +32,8 @@ public class PDFUtil {
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(bas));
 
         try {
-            Color magentaColor = buildLineColor(option);
+            Color lineColor = buildLineColor(option);
+            Color textColor = buildTextColor(option);
 
             List<String> lines = LinesUtil.build(text, option);
 
@@ -79,22 +79,22 @@ public class PDFUtil {
 
                     applyLineStyle(option, canvas);
 
-                    canvas.setStrokeColor(magentaColor)
+                    canvas.setStrokeColor(lineColor)
                             .setLineWidth(0.4f)
                             .moveTo(option.getLeftOffset(), height - (h))
                             .lineTo(width - option.getRightOffset(), height - (h))
                             .closePathStroke();
-                    canvas.setStrokeColor(magentaColor)
+                    canvas.setStrokeColor(lineColor)
                             .setLineWidth(0.4f)
                             .moveTo(option.getLeftOffset(), height - (option.getCellHeight() + h))
                             .lineTo(width - option.getRightOffset(), height - (option.getCellHeight() + h))
                             .closePathStroke();
-                    canvas.setStrokeColor(magentaColor)
+                    canvas.setStrokeColor(lineColor)
                             .setLineWidth(0.4f)
                             .moveTo(option.getLeftOffset(), height - (2 * option.getCellHeight() + h))
                             .lineTo(width - option.getRightOffset(), height - (2 * option.getCellHeight() + h))
                             .closePathStroke();
-                    canvas.setStrokeColor(magentaColor)
+                    canvas.setStrokeColor(lineColor)
                             .setLineWidth(0.4f)
                             .moveTo(option.getLeftOffset(), height - (3 * option.getCellHeight() + h))
                             .lineTo(width - option.getRightOffset(), height - (3 * option.getCellHeight() + h))
@@ -115,6 +115,7 @@ public class PDFUtil {
                                 wrapped += " ";
                                 continue;
                             }
+                            canvas.setColor(textColor, true);
                             canvas.beginText();
                             canvas.moveText(option.getLeftOffset() + c, height - (h + cellHeight * 2));
                             canvas.showText(word);
@@ -131,6 +132,10 @@ public class PDFUtil {
         return bas.toByteArray();
     }
 
+    private static Color buildTextColor(Option option) {
+        return buildColor(option.getTextColor());
+    }
+
     private static void applyLineStyle(Option option, PdfCanvas canvas) {
         if (option.getLineStyle() == LineStyle.DASH) {
              canvas.setLineDash(3, 3, 0.5f);
@@ -140,7 +145,11 @@ public class PDFUtil {
     }
 
     private static Color buildLineColor(Option option) {
-        java.awt.Color color = ColorUtil.getColor(option.getLineColor());
+        return buildColor(option.getLineColor());
+    }
+
+    private static Color buildColor(String colorName) {
+        java.awt.Color color = ColorUtil.getColor(colorName);
         return new DeviceRgb(color.getRed(), color.getGreen(), color.getBlue());
     }
 
