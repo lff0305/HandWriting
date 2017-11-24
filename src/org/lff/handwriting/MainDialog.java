@@ -1,6 +1,6 @@
 package org.lff.handwriting;
 
-import net.miginfocom.swing.MigLayout;
+import com.sun.istack.internal.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,8 +9,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.SimpleAttributeSet;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -70,6 +68,7 @@ public class MainDialog extends JDialog {
             @Override
             public void windowOpened(WindowEvent e) {
                 finished = true;
+                logger.info("Dialog Init finished. Window opened.");
             }
         });
 
@@ -94,8 +93,9 @@ public class MainDialog extends JDialog {
 
             private void preview() {
                 String text = textArea1.getText();
-                Option option = Option.getInstance();
+                @NotNull Option option = Option.getInstance();
                 setOptions(option);
+                logger.info("Preview option {}", option.toString());
                 PreviewUtil.preview(scrollPane, previewPanel, text, option);
             }
         });
@@ -258,9 +258,5 @@ public class MainDialog extends JDialog {
     static MainDialog instance;
 
     private boolean finished;
-
-    public void finished(boolean b) {
-        this.finished = true;
-    }
 }
 
