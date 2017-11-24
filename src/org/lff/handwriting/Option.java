@@ -137,11 +137,13 @@ public class Option {
     public void setTextColor(String textColor) {
         this.textColor = textColor;
     }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Option{");
         sb.append("lineColor='").append(lineColor).append('\'');
         sb.append(", lineStyle=").append(lineStyle);
+        sb.append(", textColor='").append(textColor).append('\'');
         sb.append(", rowCount=").append(rowCount);
         sb.append(", leftOffset=").append(leftOffset);
         sb.append(", rightOffset=").append(rightOffset);
