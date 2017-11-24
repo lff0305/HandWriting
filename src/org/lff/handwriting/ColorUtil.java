@@ -22,13 +22,16 @@ public class ColorUtil {
         colorMap.put("BLACK", "0x000000");
         colorMap.put("RED", "0xFF0000");
         colorMap.put("GRAY", "0x808080");
-
+        colorMap.put("GREEN", "0x00FF00");
+        colorMap.put("BLUE", "0x0000FF");
+        colorMap.put("BROWN", "0x663300");
+        colorMap.put("NAVY", "0x000080");
     }
 
-    public static Color getColor(String lineColor) {
-        String code = colorMap.get(lineColor.trim().toUpperCase());
+    public static Color getColor(String color) {
+        String code = colorMap.get(color.trim().toUpperCase());
         if (code == null) {
-            logger.info("Failed to map color {}", lineColor);
+            logger.info("Failed to map color {}", color);
             return Color.BLACK;
         }
         Color c = Color.decode(code);

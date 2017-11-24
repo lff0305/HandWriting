@@ -8,6 +8,7 @@ public class Option {
 
     private String lineColor;
     private LineStyle lineStyle;
+    private String textColor;
 
     private Option() {
 
@@ -129,6 +130,13 @@ public class Option {
         this.cellHeight = cellHeight;
     }
 
+    public String getTextColor() {
+        return this.textColor;
+    }
+
+    public void setTextColor(String textColor) {
+        this.textColor = textColor;
+    }
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Option{");

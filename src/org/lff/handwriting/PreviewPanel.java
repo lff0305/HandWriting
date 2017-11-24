@@ -97,7 +97,7 @@ public class PreviewPanel extends JPanel {
             g2d.drawLine(leftOffset, h + 2 * cellHeight, right, h + 2 * cellHeight);
             g2d.drawLine(leftOffset, h + 3 * cellHeight, right, h + 3 * cellHeight);;
 
-            g2d.setColor(Color.BLACK);
+            g2d.setColor(ColorUtil.getColor(option.getTextColor()));
             g2d.setFont(sizedFont);
             String line = lines.get(i);
             line = line.trim();

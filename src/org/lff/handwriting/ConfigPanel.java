@@ -75,4 +75,9 @@ public class ConfigPanel extends JPanel {
 
         return LineStyle.DASH;
     }
+
+    public String getTextColor() {
+        String v = (String)this.cmbFontColor.getSelectedItem();
+        return v.trim();
+    }
 }
