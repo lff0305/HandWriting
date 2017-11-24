@@ -65,4 +65,14 @@ public class ConfigPanel extends JPanel {
     public String getLineColor() {
         return (String)this.cmbLineColor.getSelectedItem();
     }
+
+    public LineStyle getLineStype() {
+        String v = (String)this.cmbLineStyle.getSelectedItem();
+        v = v.trim();
+        if (v.equalsIgnoreCase("SOLID")) {
+            return LineStyle.SOLID;
+        }
+
+        return LineStyle.DASH;
+    }
 }

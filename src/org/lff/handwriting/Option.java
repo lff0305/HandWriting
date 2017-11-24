@@ -7,6 +7,7 @@ package org.lff.handwriting;
 public class Option {
 
     private String lineColor;
+    private LineStyle lineStyle;
 
     private Option() {
 
@@ -22,6 +23,14 @@ public class Option {
 
     public String getLineColor() {
         return lineColor;
+    }
+
+    public void setLineStyle(LineStyle lineStyle) {
+        this.lineStyle = lineStyle;
+    }
+
+    public LineStyle getLineStyle() {
+        return lineStyle;
     }
 
     static private class HOLDER {

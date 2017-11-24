@@ -238,6 +238,7 @@ public class MainDialog extends JDialog {
         options.setAddEmptyLineAfter(panel.isAddEmptyLine());
         options.setSkipEmptyLine(panel.isSkipEmptyLine());
         options.setLineColor(panel.getLineColor());
+        options.setLineStyle(panel.getLineStype());
     }
 
     public static JTextPane getTextPane() {
