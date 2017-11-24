@@ -28,7 +28,6 @@ public class PreviewPanel extends JPanel {
     }
 
     private String text;
-    private boolean shouldUpdate = false;
 
     private int rowCount = 12;
     int leftOffset = 36;
@@ -73,9 +72,8 @@ public class PreviewPanel extends JPanel {
         //creates a copy of the Graphics instance
         Graphics2D g2d = (Graphics2D) g.create();
 
-        Stroke dashed = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{6,1}, 0);
-        g2d.setStroke(dashed);
-
+        Stroke stroke = getLineStroke();
+        g2d.setStroke(stroke);
         InputStream is = this.getClass().getResourceAsStream("/font/JARDOTTY.ttf");
         Font sizedFont = null;
         try {
@@ -128,7 +126,14 @@ public class PreviewPanel extends JPanel {
         g2d.dispose();
     }
 
-    public void setUpdate(boolean update) {
-        this.shouldUpdate = update;
+    private Stroke getLineStroke() {
+        Stroke stroke = null;
+        if (option.getLineStyle() == LineStyle.DASH) {
+            stroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{6, 1}, 0);
+        }
+        if (option.getLineStyle() == LineStyle.SOLID) {
+            stroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, null, 0);
+        }
+        return stroke;
     }
 }
