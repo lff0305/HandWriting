@@ -11,7 +11,9 @@ import java.io.InputStreamReader;
 import java.lang.invoke.MethodHandles;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -22,6 +24,13 @@ import java.util.stream.Collectors;
 public class FontUtil {
 
     private static Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+
+    private static Map<String, Float> ratio = new HashMap<>();
+
+    static {
+        ratio.put("JARDOTTY.TTF", 1.7f);
+        ratio.put("KD.TTF", 1.9f);
+    }
 
     public static List<String> listFonts() {
         List<String> result = new ArrayList<>();
@@ -61,5 +70,14 @@ public class FontUtil {
             }
         }
         return null;
+    }
+
+    public static float getRatio(String name) {
+        Float f = ratio.get(name.toUpperCase());
+        if (f == null) {
+            logger.error("Failed to get ratio for {}", name);
+            return 1.7f;
+        }
+        return f;
     }
 }

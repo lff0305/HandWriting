@@ -75,7 +75,11 @@ public class PreviewPanel extends JPanel {
         g2d.setStroke(stroke);
 
         Font font = FontUtil.getFont(option.getFontName());
-        Font sizedFont = font.deriveFont(cellHeight * 1.7f);
+        float ratio = FontUtil.getRatio(option.getFontName());
+
+        logger.info("Font info : {} {}", option.getFontName(), ratio);
+
+        Font sizedFont = font.deriveFont(cellHeight * ratio);
 
         java.util.List<String> lines = LinesUtil.build(text, option);
 

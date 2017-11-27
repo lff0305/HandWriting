@@ -4,6 +4,7 @@ import net.miginfocom.swing.MigLayout;
 import org.lff.handwriting.util.FontUtil;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * @author Feifei Liu
@@ -16,11 +17,13 @@ public class ConfigPanel extends JPanel {
     private JLabel label3 = new JLabel("Line color");
     private JLabel label4 = new JLabel("Line style");
     private JLabel label5 = new JLabel("Font Name");
+    private JLabel label6 = new JLabel("Text Size ratio");
     private JComboBox cmbRowsCount = new JComboBox();
     private JComboBox cmbFont = new JComboBox();
     private JComboBox cmbFontColor = new JComboBox();
     private JComboBox cmbLineColor = new JComboBox();
     private JComboBox cmbLineStyle = new JComboBox();
+    private JTextField edtSizeRatio = new JTextField();
     private JCheckBox chkEmptyLine = new JCheckBox("Add an empty line for each line");
     private JCheckBox chkSkipEmptyLine = new JCheckBox("Skip empty lines");
     private MigLayout layout = new MigLayout("wrap 2");
@@ -44,6 +47,11 @@ public class ConfigPanel extends JPanel {
         loadFonts(cmbFont);
         this.add(cmbFont);
 
+        this.add(label6);
+        this.edtSizeRatio.setPreferredSize(new Dimension(64, 18));
+        this.edtSizeRatio.setText("1.7");
+        this.add(edtSizeRatio);
+
         FontUtil.iterateFonts(c -> {
             cmbFont.addItem(c);
         });
@@ -65,6 +73,13 @@ public class ConfigPanel extends JPanel {
 
         this.add(chkEmptyLine, "span 2");
         this.add(chkSkipEmptyLine, "span 2");
+
+        cmbFont.addActionListener(l -> {
+            JComboBox v = (JComboBox)l.getSource();
+            float r = FontUtil.getRatio((String)v.getSelectedItem());
+            this.edtSizeRatio.setText(String.valueOf(r));
+        });
+
     }
 
     private void loadFonts(JComboBox cmbFont) {
