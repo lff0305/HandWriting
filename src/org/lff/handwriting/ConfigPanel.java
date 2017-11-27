@@ -48,7 +48,7 @@ public class ConfigPanel extends JPanel {
             cmbFont.addItem(c);
         });
 
-        cmbLineColor.setSelectedItem("MAGENTA");
+        cmbFontColor.setSelectedItem("MAGENTA");
         this.add(label2); // Wrap to next row
         this.add(cmbFontColor);
 
