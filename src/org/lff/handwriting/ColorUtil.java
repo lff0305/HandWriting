@@ -41,7 +41,7 @@ public class ColorUtil {
 
     public static void iterateColors(Consumer<String> f) {
         for (String color : colorMap.keySet()) {
-            f.accept("    " + color);
+            f.accept(color);
         }
     }
 }

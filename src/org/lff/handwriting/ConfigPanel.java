@@ -37,6 +37,7 @@ public class ConfigPanel extends JPanel {
         ColorUtil.iterateColors( c -> {
             cmbFontColor.addItem(c);
         });
+        cmbLineColor.setSelectedItem("MAGENTA");
         this.add(label2); // Wrap to next row
         this.add(cmbFontColor);
 
@@ -45,6 +46,7 @@ public class ConfigPanel extends JPanel {
         ColorUtil.iterateColors( c -> {
             cmbLineColor.addItem(c);
         });
+        cmbLineColor.setSelectedItem("BLACK");
         this.add(label4);
         this.add(cmbLineStyle);
         cmbLineStyle.addItem(" Dash ");
