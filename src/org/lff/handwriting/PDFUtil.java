@@ -9,12 +9,12 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfPage;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
+import org.lff.handwriting.util.FontUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
@@ -24,8 +24,6 @@ import java.util.List;
 public class PDFUtil {
 
     private static Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-
-    public static final InputStream FONT = PDFUtil.class.getResourceAsStream("/font/JARDOTTY.ttf");
 
     public static byte[] getContent(String text, Option option) throws IOException {
         ByteArrayOutputStream bas = new ByteArrayOutputStream();
@@ -37,9 +35,9 @@ public class PDFUtil {
 
             List<String> lines = LinesUtil.build(text, option);
 
-            final byte[] fontBuf = getFontBuffer();
-
-            logger.info("Font loaded. size = {}", fontBuf.length);
+            final byte[] fontBuf = FontUtil.getFontBuffer(option.getFontName());
+            final float ratio = FontUtil.getRatio(option.getFontName());
+            logger.info("Font loaded. name= {}, size = {}", option.getFontName(), fontBuf.length);
 
             int pageCount = getPageCount(lines, option.getRowCount());
 
@@ -108,8 +106,8 @@ public class PDFUtil {
                             String word = words[k];
                             word = word.trim();
                             PdfFont font = PdfFontFactory.createFont(fontBuf, PdfEncodings.CP1250, true);
-                            canvas.setFontAndSize(font, option.getCellHeight() * 1.7f);
-                            float wordWidth = font.getWidth(word + " ", option.getCellHeight() * 1.7f);
+                            canvas.setFontAndSize(font, option.getCellHeight() * ratio);
+                            float wordWidth = font.getWidth(word + " ", option.getCellHeight() * ratio);
                             if (option.getLeftOffset() + c + wordWidth > width - option.getRightOffset()) {
                                 wrapped += word;
                                 wrapped += " ";
@@ -159,17 +157,5 @@ public class PDFUtil {
             pageCount ++;
         }
         return pageCount;
-    }
-
-    private static byte[] getFontBuffer() throws IOException {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        byte[] buf = new byte[4096];
-        int size = FONT.read(buf);
-        while (size != -1) {
-            bos.write(buf, 0, size);
-            size = FONT.read(buf);
-        }
-        bos.close();
-        return bos.toByteArray();
     }
 }

@@ -57,7 +57,7 @@ public class PreviewPanel extends JPanel {
         setPreferredSize(new Dimension(this.getWidth(), height));
     }
 
-    public void paintComponent(Graphics g){
+    public void paintComponent(Graphics g) {
 
         if (rowCount == 0) {
             return;

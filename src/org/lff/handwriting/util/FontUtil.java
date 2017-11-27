@@ -4,10 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.lang.invoke.MethodHandles;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -29,7 +26,7 @@ public class FontUtil {
 
     static {
         ratio.put("JARDOTTY.TTF", 1.7f);
-        ratio.put("KD.TTF", 1.9f);
+        ratio.put("KD.TTF", 2.1f);
     }
 
     public static List<String> listFonts() {
@@ -79,5 +76,18 @@ public class FontUtil {
             return 1.7f;
         }
         return f;
+    }
+
+    public static byte[] getFontBuffer(String fontName) throws IOException {
+        InputStream is = FontUtil.class.getResourceAsStream("/font/" + fontName);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        byte[] buf = new byte[4096];
+        int size = is.read(buf);
+        while (size != -1) {
+            bos.write(buf, 0, size);
+            size = is.read(buf);
+        }
+        bos.close();
+        return bos.toByteArray();
     }
 }
