@@ -1,6 +1,7 @@
 package org.lff.handwriting;
 
 import net.miginfocom.swing.MigLayout;
+import org.lff.handwriting.util.FontUtil;
 
 import javax.swing.*;
 
@@ -14,8 +15,9 @@ public class ConfigPanel extends JPanel {
     private JLabel label2 = new JLabel("Font color");
     private JLabel label3 = new JLabel("Line color");
     private JLabel label4 = new JLabel("Line style");
-    private JLabel label5 = new JLabel("Add empty line");
+    private JLabel label5 = new JLabel("Font Name");
     private JComboBox cmbRowsCount = new JComboBox();
+    private JComboBox cmbFont = new JComboBox();
     private JComboBox cmbFontColor = new JComboBox();
     private JComboBox cmbLineColor = new JComboBox();
     private JComboBox cmbLineStyle = new JComboBox();
@@ -37,6 +39,15 @@ public class ConfigPanel extends JPanel {
         ColorUtil.iterateColors( c -> {
             cmbFontColor.addItem(c);
         });
+
+        this.add(label5);
+        loadFonts(cmbFont);
+        this.add(cmbFont);
+
+        FontUtil.iterateFonts(c -> {
+            cmbFont.addItem(c);
+        });
+
         cmbLineColor.setSelectedItem("MAGENTA");
         this.add(label2); // Wrap to next row
         this.add(cmbFontColor);
@@ -54,6 +65,10 @@ public class ConfigPanel extends JPanel {
 
         this.add(chkEmptyLine, "span 2");
         this.add(chkSkipEmptyLine, "span 2");
+    }
+
+    private void loadFonts(JComboBox cmbFont) {
+
     }
 
     public boolean isSkipEmptyLine() {
