@@ -34,17 +34,17 @@ public class ConfigPanel extends JPanel {
         cmbRowsCount.addItem(" 12 ");
         cmbRowsCount.addItem(" 13 ");
         this.add(cmbRowsCount);
-        cmbFontColor.addItem(" Black ");
-        cmbFontColor.addItem(" Red ");
+        ColorUtil.iterateColors( c -> {
+            cmbFontColor.addItem(c);
+        });
         this.add(label2); // Wrap to next row
         this.add(cmbFontColor);
 
         this.add(label3);
         this.add(cmbLineColor);
-        cmbLineColor.addItem(" Magenta ");
-        cmbLineColor.addItem(" Black ");
-        cmbLineColor.addItem(" Red ");
-        cmbLineColor.addItem(" Gray ");
+        ColorUtil.iterateColors( c -> {
+            cmbLineColor.addItem(c);
+        });
         this.add(label4);
         this.add(cmbLineStyle);
         cmbLineStyle.addItem(" Dash ");

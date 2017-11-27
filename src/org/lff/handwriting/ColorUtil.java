@@ -7,6 +7,7 @@ import java.awt.*;
 import java.lang.invoke.MethodHandles;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * @author Feifei Liu
@@ -36,5 +37,11 @@ public class ColorUtil {
         }
         Color c = Color.decode(code);
         return c;
+    }
+
+    public static void iterateColors(Consumer<String> f) {
+        for (String color : colorMap.keySet()) {
+            f.accept("    " + color);
+        }
     }
 }
