@@ -9,6 +9,15 @@ public class Option {
     private String lineColor;
     private LineStyle lineStyle;
     private String textColor;
+    private String fontName;
+
+    public String getFontName() {
+        return fontName;
+    }
+
+    public void setFontName(String fontName) {
+        this.fontName = fontName;
+    }
 
     private Option() {
 

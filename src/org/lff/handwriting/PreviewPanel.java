@@ -1,5 +1,6 @@
 package org.lff.handwriting;
 
+import org.lff.handwriting.util.FontUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -7,8 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
-import java.io.IOException;
-import java.io.InputStream;
 import java.lang.invoke.MethodHandles;
 
 /**
@@ -74,16 +73,9 @@ public class PreviewPanel extends JPanel {
 
         Stroke stroke = getLineStroke();
         g2d.setStroke(stroke);
-        InputStream is = this.getClass().getResourceAsStream("/font/JARDOTTY.ttf");
-        Font sizedFont = null;
-        try {
-            Font font = Font.createFont(Font.TRUETYPE_FONT, is);
-            sizedFont = font.deriveFont(cellHeight * 1.7f);
-        } catch (FontFormatException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        Font font = FontUtil.getFont(option.getFontName());
+        Font sizedFont = font.deriveFont(cellHeight * 1.7f);
 
         java.util.List<String> lines = LinesUtil.build(text, option);
 

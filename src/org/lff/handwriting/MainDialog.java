@@ -234,6 +234,7 @@ public class MainDialog extends JDialog {
         options.setLineColor(panel.getLineColor());
         options.setLineStyle(panel.getLineStype());
         options.setTextColor(panel.getTextColor());
+        options.setFontName(panel.getFontName());
     }
 
     public static JTextPane getTextPane() {

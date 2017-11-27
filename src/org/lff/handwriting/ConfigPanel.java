@@ -97,4 +97,9 @@ public class ConfigPanel extends JPanel {
         String v = (String)this.cmbFontColor.getSelectedItem();
         return v.trim();
     }
+
+    public String getFontName() {
+        String v = (String) cmbFont.getSelectedItem();
+        return v.trim();
+    }
 }
