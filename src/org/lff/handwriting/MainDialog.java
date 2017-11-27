@@ -23,11 +23,9 @@ public class MainDialog extends JDialog {
 
     private static Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    private static ExecutorService pool = Executors.newCachedThreadPool();
+    private static ExecutorService pool = Executors.newCachedThreadPool(new NamedThreadFactory("PDF Generating Pool"));
 
     private static final long serialVersionUID = 2401381172141590048L;
-
-    private static JTextPane staticPane;
 
     private JPanel contentPane;
     private JButton buttonOK;
@@ -180,10 +178,6 @@ public class MainDialog extends JDialog {
     private void onAbout() {
         AboutDialog d = new AboutDialog();
         d.init(this);
-    }
-
-    private PreviewPanel getPreviewPanel() {
-        return (PreviewPanel) previewPanel;
     }
 
     private void createUIComponents() {
