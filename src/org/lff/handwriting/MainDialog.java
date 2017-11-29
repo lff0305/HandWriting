@@ -1,9 +1,9 @@
 package org.lff.handwriting;
 
-import com.sun.istack.internal.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -91,7 +91,7 @@ public class MainDialog extends JDialog {
 
             private void preview() {
                 String text = textArea1.getText();
-                @NotNull Option option = Option.getInstance();
+                @Nonnull Option option = Option.getInstance();
                 setOptions(option);
                 logger.info("Preview option {}", option.toString());
                 PreviewUtil.preview(scrollPane, previewPanel, text, option);

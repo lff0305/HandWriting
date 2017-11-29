@@ -4,15 +4,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.*;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.invoke.MethodHandles;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.net.URI;
+import java.nio.file.*;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Feifei Liu
@@ -31,13 +33,42 @@ public class FontUtil {
 
     public static List<String> listFonts() {
         List<String> result = new ArrayList<>();
+        FileSystem fileSystem = null;
         try {
-            final InputStream is = FontUtil.class.getResourceAsStream("/font");
-            final InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
-            final BufferedReader br = new BufferedReader(isr);
-            return br.lines().collect(Collectors.toList());
+            URI uri = FontUtil.class.getResource("/font").toURI();
+            Path myPath;
+            if (uri.getScheme().equals("jar")) {
+                fileSystem = FileSystems.newFileSystem(uri, Collections.<String, Object>emptyMap());
+                myPath = fileSystem.getPath("/font");
+                Stream<Path> walk = Files.walk(myPath, 1);
+                for (Iterator<Path> it = walk.iterator(); it.hasNext();){
+                    Path p = it.next();
+                    if (p.getNameCount() < 2) {
+                        continue;
+                    }
+                    result.add(p.getName(1).toString());
+                }
+            } else {
+                myPath = Paths.get(uri);
+                Stream<Path> walk = Files.walk(myPath, 1);
+                for (Iterator<Path> it = walk.iterator(); it.hasNext();){
+                    File f = it.next().toFile();
+                    if (f.isDirectory()) {
+                        continue;
+                    }
+                    result.add(f.getName());
+                }
+            }
+
         } catch (Exception e) {
             logger.error("Failed to list fonts", e);
+        } finally {
+            if (fileSystem != null) {
+                try {
+                    fileSystem.close();
+                } catch (IOException e) {
+                }
+            }
         }
         return result;
     }
