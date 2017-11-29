@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="handwriting" default="all">
-  
-  
+
   <property file="handwriting.properties"/>
   <!-- Uncomment the following property if no tests compilation is needed -->
   <!-- 
@@ -211,7 +210,13 @@
     </propertyfile>
 
     <mkdir dir="${english.output.dir}"/>
-    <javac2 destdir="${english.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.english}/javac">
+    <javac2 destdir="${english.output.dir}" debug="${compiler.debug}"
+            nowarn="${compiler.generate.no.warnings}"
+            memorymaximumsize="${compiler.max.memory}"
+            fork="false" executable="${module.jdk.bin.english}/javac"
+            encoding="UTF-8"
+
+    >
       <compilerarg line="${compiler.args.english}"/>
       <bootclasspath refid="english.module.bootclasspath"/>
       <classpath refid="english.module.production.classpath"/>
@@ -226,6 +231,9 @@
       </fileset>
     </copy>
 
+    <delete file="${english.output.dir}/font/KD.ttf">
+
+    </delete>
 
     <jar destfile="${dist.dir}/english.jar" basedir="${english.output.dir}">
     </jar>
