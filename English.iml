@@ -12,5 +12,6 @@
     <orderEntry type="library" name="forms_rt" level="project" />
     <orderEntry type="library" name="slf4j-api-1.7.25" level="project" />
     <orderEntry type="library" name="logback-classic-1.2.3" level="project" />
+    <orderEntry type="library" name="jsr305-3.0.2" level="project" />
   </component>
 </module>
