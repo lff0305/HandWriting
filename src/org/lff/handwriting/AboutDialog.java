@@ -1,5 +1,7 @@
 package org.lff.handwriting;
 
+import org.lff.handwriting.util.VersionUtil;
+
 import javax.swing.*;
 import javax.swing.text.Document;
 import javax.swing.text.html.HTMLEditorKit;
@@ -39,11 +41,13 @@ public class AboutDialog {
         // create some simple html as a string
         String htmlString = "<html>"
                 + "<body>"
+                + "<p>V" + VersionUtil.getVersion() + "</p>\n"
                 + "<p>By Liu Feifei, 2017</p>\n"
                 + "<p>This project, is based on OpenSource projects, including iText, slf4j, MigLayout, etc.</p>\n"
                 + "<p>And font resources from JARDOTTY, etc.</p>\n"
                 + "<p>Any bugs, or suggestions, please <a href=\"lff0305@gmail.com\">email me</a></p>\n"
                 + "<p>Or submit <a href=\"https://github.com/lff0305\">an issue</a> at GitHub.</p>\n"
+                + "<p>&nbsp;</p>\n"
                 + "</body>\n";
 
         // create a document, set it on the jeditorpane, then add the html
@@ -59,7 +63,7 @@ public class AboutDialog {
         j.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         // display the frame
-        j.setSize(new Dimension(400, 350));
+        j.setSize(new Dimension(500, 400));
 
         // pack it, if you prefer
         j.pack();

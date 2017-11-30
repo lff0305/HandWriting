@@ -1,5 +1,6 @@
 package org.lff.handwriting;
 
+import org.lff.handwriting.util.VersionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +16,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
-import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -213,18 +213,7 @@ public class MainDialog extends JDialog {
     }
 
     private String getVersion() {
-        Properties p = new Properties();
-        try {
-            p.load(this.getClass().getResourceAsStream("/org/lff/handwriting/version.properties"));
-        } catch (IOException e) {
-            logger.error("Cannot load version.properties", e);
-            return "NA";
-        }
-        String major = p.getProperty("major");
-        String minor = p.getProperty("minor");
-        String build = p.getProperty("buildNo");
-        String timestamp = p.getProperty("timestamp");
-        return major + "." + minor + " build " + build + " " + timestamp;
+        return VersionUtil.getVersion();
     }
 
     public void setOptions(Option options) {
