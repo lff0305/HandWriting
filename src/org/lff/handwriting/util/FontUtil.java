@@ -26,12 +26,17 @@ public class FontUtil {
 
     private static Map<String, Float> ratio = new HashMap<>();
 
+    private static List<String> fonts = null;
+
     static {
         ratio.put("JARDOTTY.TTF", 1.7f);
         ratio.put("KD.TTF", 2.1f);
     }
 
-    public static List<String> listFonts() {
+    public synchronized static List<String> listFonts() {
+        if (fonts != null) {
+            return fonts;
+        }
         List<String> result = new ArrayList<>();
         FileSystem fileSystem = null;
         try {
@@ -70,7 +75,7 @@ public class FontUtil {
                 }
             }
         }
-        return result;
+        return fonts = result;
     }
 
     public static void main(String[] main) {
