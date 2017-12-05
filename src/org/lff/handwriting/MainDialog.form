@@ -25,16 +25,6 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="7167f" class="javax.swing.JTextArea" binding="textArea1" default-binding="true">
-                <constraints>
-                  <grid row="0" column="0" row-span="3" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="50"/>
-                  </grid>
-                </constraints>
-                <properties>
-                  <text value="The quick brown fox jumps over the lazy dog&#10;One Two Three For Five Six Seven&#10;Jingle bells&#10;Dashing through the snow&#10;In a one horse open sleigh&#10;O'er the hills we go&#10;Laughing all the way.&#10;Bells on bobtail ring&#10;Making spirits bright.&#10;What fun it is to ride and sing&#10;A sleighing song tonight.&#10;Jingle bells jingle bells&#10;Jingle all the way!&#10;Oh what fun it is to ride&#10;In a one horse open sleigh" noi18n="true"/>
-                </properties>
-              </component>
               <hspacer id="fbab0">
                 <constraints>
                   <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -118,6 +108,26 @@
                   </grid>
                 </constraints>
               </vspacer>
+              <vspacer id="607cd">
+                <constraints>
+                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </vspacer>
+              <scrollpane id="9b886">
+                <constraints>
+                  <grid row="0" column="0" row-span="3" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="7167f" class="javax.swing.JTextArea" binding="textArea1" default-binding="true">
+                    <constraints/>
+                    <properties>
+                      <text value="The quick brown fox jumps over the lazy dog&#10;One Two Three For Five Six Seven&#10;Jingle bells&#10;Dashing through the snow&#10;In a one horse open sleigh&#10;O'er the hills we go&#10;Laughing all the way.&#10;Bells on bobtail ring&#10;Making spirits bright.&#10;What fun it is to ride and sing&#10;A sleighing song tonight.&#10;Jingle bells jingle bells&#10;Jingle all the way!&#10;Oh what fun it is to ride&#10;In a one horse open sleigh" noi18n="true"/>
+                    </properties>
+                  </component>
+                </children>
+              </scrollpane>
             </children>
           </grid>
           <scrollpane id="fcb64" binding="scrollPane" custom-create="true">
